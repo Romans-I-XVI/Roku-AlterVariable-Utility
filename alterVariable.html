@@ -45,9 +45,22 @@ function submit() {
 		<button type="button" onclick="submit()"> Submit </button>
 	</div><br><br><br><br>
 	<div style="width:60%; margin: 0 auto">
+		<h1><u>Installation</u></h1>
+		<p>
+			<ul>
+				<li>Add alterVariable.brs to your source folder.</li>
+				<li>Add these 3 lines to the start of your Main() function.
+					<ul>
+						<li>m.network_input = CreateObject("roInput")</li>
+						<li>m.network_input_port = CreateObject("roMessagePort")</li>
+						<li>m.network_input.SetMessagePort(m.network_input_port)</li>
+					</ul>
+				</li>
+				<li>Call alterVariable() from an appropriate while loop.</li>
+			</ul>
+		</p>
 		<h1><u>Instructions</u></h1>
 		<p>This script is for use by Roku developers. With this script you can change the value of any variable that has been declared with the special "m" pointer. This could be either a global variable if called outside an associative array or any variable inside the associative array that has been used to call the function. <a href="http://sdkdocs.roku.com/display/sdkdoc/BrightScript+Language+Reference#BrightScriptLanguageReference-4.11%22m%22TheBrightScript%22thispointer%22">"m" The Brightscript "this pointer"</a>.
-		To install just add the file alterVariable.brs to your source folder and call alterVariable() from an appropriate while loop.
 		<ul>
 			<li>First enter your Roku's IP address in the first field.</li>
 			<li>In the second field set the name of the variable you want to change. Note that the brightscript uses "." as a dilimiter. For example if your Brightscript says --- m.aa = {one: 1, two: 2, three: 3} --- the variable field on this page could say --- aa.three ---. Similarly you can change a value in an array by using brackets, however opposite normal convention you must leave the "." as it is the dilimiter. For example if your Brightscript is --- m.array = [0,1,2] --- to change the 0 index the variable field on this page should say --- array.[0] ---.</li>
