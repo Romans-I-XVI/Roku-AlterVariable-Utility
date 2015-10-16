@@ -1,0 +1,81 @@
+<html>
+<head>
+	<style>
+		body {background-color:lightgray}
+		h3    {text-align: center;}
+		h1    {text-align: center;}
+		p {text-align: center;}
+		input[type="text"] {display: block; margin : 0 auto; text-align:center;}
+		label {display: inline; margin : 0 auto; text-align:center;}
+		button {display: block; margin: 0 auto;}
+	</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+function submit() {
+    ip_address = document.getElementById("ipaddress").value;
+    variable = document.getElementById("variable").value;
+    value = document.getElementById("value").value;
+    if (document.getElementById("string_checked").checked) {
+            type = "string"
+        } else if (document.getElementById("integer_checked").checked) {
+            type = "integer"
+        } else {
+        	return false
+        }
+
+	$.ajax({
+	    url: 'http://'+ip_address+':8060/input?variable='+variable+'&value='+value+'&var_type='+type
+,
+	    type: 'POST',
+	    data: ''
+	});
+}
+</script>
+</head>
+<body>
+	<div style="width:80%; margin-left:auto; margin-right:auto;">
+		<h3>Enter Roku IP Address</h3><input id="ipaddress" type="text" size="50" autocomplete="off"><br><br>
+		<h3>Enter Variable Name</h3><input id="variable" type="text" size="50" autocomplete="off"><br><br>
+		<h3>Enter New Value</h3><input id="value" type="text" size="50" autocomplete="off"><br><br>
+		<h3>Type</h3>
+		<div style="width: 160; display:block; margin: 0 auto;">
+			<label><input id="string_checked" type="checkbox" class="type" value="1" name="Type" />String</label>
+			<label><input id="integer_checked" type="checkbox" class="type" value="1" name="Type" />Integer</label>
+		</div><br><br>
+		<button type="button" onclick="submit()"> Submit </button>
+	</div><br><br><br><br>
+	<div style="width:60%; margin: 0 auto">
+		<h1><u>Instructions</u></h1>
+		<p>This script is for use by Roku developers. With this script you can change the value of any variable that has been declared with the special "m" pointer. This could be either a global variable if called outside an associative array or any variable inside the associative array that has been used to call the function. <a href="http://sdkdocs.roku.com/display/sdkdoc/BrightScript+Language+Reference#BrightScriptLanguageReference-4.11%22m%22TheBrightScript%22thispointer%22">"m" The Brightscript "this pointer"</a>.
+		To install just add the file alterVariable.brs to your source folder and call alterVariable() from an appropriate while loop.
+		<ul>
+			<li>First enter your Roku's IP address in the first field.</li>
+			<li>In the second field set the name of the variable you want to change. Note that the brightscript uses "." as a dilimiter. For example if your Brightscript says --- m.aa = {one: 1, two: 2, three: 3} --- the variable field on this page could say --- aa.three ---. Similarly you can change a value in an array by using brackets, however opposite normal convention you must leave the "." as it is the dilimiter. For example if your Brightscript is --- m.array = [0,1,2] --- to change the 0 index the variable field on this page should say --- array.[0] ---.</li>
+			<li>In the third field you can set what you want the variable to change to.</li>
+			<li>Lastly make sure the check whether the value is a string or an integer (also check integer if it's a float).
+		</ul>
+		I hope you find this useful. I know when I'm making games I often want to make small changes and see how it looks/feels. I developed this so I could do that real time. :)<br><br>
+		*Note - the variable is currently limited to 10 levels of array/associative array "." delimiters.
+		</p>
+	</div>
+
+</body>
+<script>// the selector will match all input controls of type :checkbox
+	// and attach a click event handler 
+	$("input:checkbox").on('click', function() {
+	  // in the handler, 'this' refers to the box clicked on
+	  var $box = $(this);
+	  if ($box.is(":checked")) {
+	    // the name of the box is retrieved using the .attr() method
+	    // as it is assumed and expected to be immutable
+	    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+	    // the checked state of the group/box on the other hand will change
+	    // and the current value is retrieved using .prop() method
+	    $(group).prop("checked", false);
+	    $box.prop("checked", true);
+	  } else {
+	    $box.prop("checked", false);
+	  }
+	});
+</script>
+</html>
