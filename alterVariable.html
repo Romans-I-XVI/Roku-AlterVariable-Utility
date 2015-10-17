@@ -13,18 +13,26 @@
 <script>
 function submit() {
     ip_address = document.getElementById("ipaddress").value;
-    variable = document.getElementById("variable").value;
-    variable = variable.replace(/[/g, ".");
-    variable = variable.replace(/]/g, "");
-    value = document.getElementById("value").value;
-    value = value.replace(/,/g, "|");
-    value = value.replace(/[/g, "");
-    value = value.replace(/]/g, "");
-    value = value.replace(/ /g, "");
+    code = [
+	    document.getElementById("code_0").value,
+	    document.getElementById("code_1").value,
+	    document.getElementById("code_2").value,
+	    document.getElementById("code_3").value,
+	    document.getElementById("code_4").value,
+	    document.getElementById("code_5").value,
+	    document.getElementById("code_6").value,
+	    document.getElementById("code_7").value,
+	    document.getElementById("code_8").value,
+	    document.getElementById("code_9").value
+    ];
+
+    for(var i=0; i < code.length; i++) {
+		code[i] = encodeURIComponent(code[i])
+	}
 
 
 	$.ajax({
-	    url: 'http://'+ip_address+':8060/input?variable='+variable+'&value='+value
+	    url: 'http://'+ip_address+':8060/input?code_0='+code[0]+"&code_1="+code[1]+"&code_2="+code[2]+"&code_3="+code[3]+"&code_4="+code[4]+"&code_5="+code[5]+"&code_6="+code[6]+"&code_7="+code[7]+"&code_8="+code[8]+"&code_9="+code[9]
 ,
 	    type: 'POST',
 	    data: ''
@@ -35,17 +43,40 @@ function submit() {
 <body>
 	<div style="width:80%; margin-left:auto; margin-right:auto;">
 		<h3>Enter Roku IP Address</h3><input id="ipaddress" type="text" size="50" autocomplete="off"><br><br>
-		<h3>Enter Variable Name</h3><input id="variable" type="text" size="50" autocomplete="off"><br><br>
-		<h3>Enter New Value</h3><input id="value" type="text" size="50" autocomplete="off"><br><br>
+		<h3>Enter Code To Execute</h3>
+		<input id="code_0" type="text" size="80" autocomplete="off"><br>
+		<input id="code_1" type="text" size="80" autocomplete="off"><br>
+		<input id="code_2" type="text" size="80" autocomplete="off"><br>
+		<input id="code_3" type="text" size="80" autocomplete="off"><br>
+		<input id="code_4" type="text" size="80" autocomplete="off"><br>
+		<input id="code_5" type="text" size="80" autocomplete="off"><br>
+		<input id="code_6" type="text" size="80" autocomplete="off"><br>
+		<input id="code_7" type="text" size="80" autocomplete="off"><br>
+		<input id="code_8" type="text" size="80" autocomplete="off"><br>
+		<input id="code_9" type="text" size="80" autocomplete="off"><br>
 		<button type="button" onclick="submit()"> Submit </button>
 	</div><br><br><br><br>
 	<div style="width:60%; margin: 0 auto">
+		<h1><u>Installation</u></h1>
+		<p>
+			<ul>
+				<li>Add alterVariable.brs to your source folder.</li>
+				<li>Add these 3 lines to the start of your Main() function.
+					<ul>
+						<li>m.network_input = CreateObject("roInput")</li>
+						<li>m.network_input_port = CreateObject("roMessagePort")</li>
+						<li>m.network_input.SetMessagePort(m.network_input_port)</li>
+					</ul>
+				</li>
+				<li>Call alterVariable() from an appropriate while loop.</li>
+			</ul>
+		</p>
 		<h1><u>Instructions</u></h1>
-		<p>This script is for use by Roku developers. With this script you can change the value of any variable that has been declared with the special "m" pointer. This could be either a global variable if called outside an associative array or any variable inside the associative array that has been used to call the function. <a href="http://sdkdocs.roku.com/display/sdkdoc/BrightScript+Language+Reference#BrightScriptLanguageReference-4.11%22m%22TheBrightScript%22thispointer%22">"m" The Brightscript "this pointer"</a><br>
+		<p>This script is for use by Roku developers. With this script you can execute code on an active Roku development channel.
 		<ul>
 			<li>First enter your Roku's IP address in the first field.</li>
-			<li>In the second field set the name of the variable you want to change. For example if your Brightscript says --- m.aa = {one: 1, two: 2, three: 3} --- the variable field on this page could say --- aa.three ---. Similarly you can change a value in an array by using brackets. For example if your Brightscript is --- m.array = [0,1,2] --- to change the 0 index the variable field on this page should say --- array[0] ---.</li>
-			<li>In the third field you can set what you want the variable to change to. Currently this can be a string, integer, float, or array.</li>
+			<li>In the additional fields enter the code you would like to execute, each field is a line of code.</li>
+			<li>Press submit. That's it.</li>
 		</ul>
 		I hope you find this useful. I know when I'm making games I often want to make small changes and see how it looks/feels. I developed this so I could do that real time. :)<br><br>
 		</p>
