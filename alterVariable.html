@@ -1,7 +1,8 @@
+
 <html>
 <head>
 	<style>
-		body {background-color:lightgray}
+		body {background-color:lightgray; text-align:center;}
 		h3    {text-align: center;}
 		h1    {text-align: center;}
 		p {text-align: center;}
@@ -12,93 +13,38 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>
 function submit() {
-    ip_address = document.getElementById("ipaddress").value;
-    code = [
-	    document.getElementById("code_0").value,
-	    document.getElementById("code_1").value,
-	    document.getElementById("code_2").value,
-	    document.getElementById("code_3").value,
-	    document.getElementById("code_4").value,
-	    document.getElementById("code_5").value,
-	    document.getElementById("code_6").value,
-	    document.getElementById("code_7").value,
-	    document.getElementById("code_8").value,
-	    document.getElementById("code_9").value
-    ];
-
-    for(var i=0; i < code.length; i++) {
-		code[i] = encodeURIComponent(code[i])
-	}
-
-
+	ip = document.getElementById("ip").value
+    id = document.getElementById("id").value
+    code = document.getElementById("code").value
+    code = encodeURIComponent(code)
 	$.ajax({
-	    url: 'http://'+ip_address+':8060/input?code_0='+code[0]+"&code_1="+code[1]+"&code_2="+code[2]+"&code_3="+code[3]+"&code_4="+code[4]+"&code_5="+code[5]+"&code_6="+code[6]+"&code_7="+code[7]+"&code_8="+code[8]+"&code_9="+code[9]
+	    url: 'http://'+ip+':8060/input?id='+id+"&code="+code
 ,
 	    type: 'POST',
 	    data: ''
 	});
 }
+
+
 </script>
 </head>
 <body>
 	<div style="width:100%; margin-left:auto; margin-right:auto;">
-		<h3>Enter Roku IP Address</h3><input id="ipaddress" type="text" size="50" autocomplete="off"><br><br>
-		<h3>Enter Code To Execute</h3>
-		<input id="code_0" type="text" size="80" autocomplete="off"><br>
-		<input id="code_1" type="text" size="80" autocomplete="off"><br>
-		<input id="code_2" type="text" size="80" autocomplete="off"><br>
-		<input id="code_3" type="text" size="80" autocomplete="off"><br>
-		<input id="code_4" type="text" size="80" autocomplete="off"><br>
-		<input id="code_5" type="text" size="80" autocomplete="off"><br>
-		<input id="code_6" type="text" size="80" autocomplete="off"><br>
-		<input id="code_7" type="text" size="80" autocomplete="off"><br>
-		<input id="code_8" type="text" size="80" autocomplete="off"><br>
-		<input id="code_9" type="text" size="80" autocomplete="off"><br>
+		Roku IP<input id="ip" type="text" size="80" autocomplete="on"><br>
+		Instance ID<input id="id" type="text" size="80" autocomplete="on"><br>
+		Code<input id="code" type="text" size="80" autocomplete="on"><br>
 		<button type="button" onclick="submit()"> Submit </button>
-	</div><br><br><br><br>
-	<div style="width:60%; margin: 0 auto">
-		<h1><u>Installation</u></h1>
-		<p>
-			<ul>
-				<li>Add alterVariable.brs to your source folder.</li>
-				<li>Add these 3 lines to the start of your Main() function.
-					<ul>
-						<li>m.network_input = CreateObject("roInput")</li>
-						<li>m.network_input_port = CreateObject("roMessagePort")</li>
-						<li>m.network_input.SetMessagePort(m.network_input_port)</li>
-					</ul>
-				</li>
-				<li>Call alterVariable() from an appropriate while loop.</li>
-			</ul>
-		</p>
-		<h1><u>Instructions</u></h1>
-		<p>This script is for use by Roku developers. With this script you can execute code on an active Roku development channel.
-		<ul>
-			<li>First enter your Roku's IP address in the first field.</li>
-			<li>In the additional fields enter the code you would like to execute, each field is a line of code.</li>
-			<li>Press submit. That's it.</li>
-		</ul>
-		I hope you find this useful. I know when I'm making games I often want to make small changes and see how it looks/feels. I developed this so I could do that real time. :)<br><br>
-		</p>
 	</div>
+<script type="text/javascript">
+document.getElementById('code').onkeypress = function(e) {
+    var event = e || window.event;
+    var charCode = event.which || event.keyCode;
 
-</body>
-<script>// the selector will match all input controls of type :checkbox
-	// and attach a click event handler 
-	$("input:checkbox").on('click', function() {
-	  // in the handler, 'this' refers to the box clicked on
-	  var $box = $(this);
-	  if ($box.is(":checked")) {
-	    // the name of the box is retrieved using the .attr() method
-	    // as it is assumed and expected to be immutable
-	    var group = "input:checkbox[name='" + $box.attr("name") + "']";
-	    // the checked state of the group/box on the other hand will change
-	    // and the current value is retrieved using .prop() method
-	    $(group).prop("checked", false);
-	    $box.prop("checked", true);
-	  } else {
-	    $box.prop("checked", false);
-	  }
-	});
+    if ( charCode == '13' ) {
+      submit()
+      return false;
+    }
+}
+
 </script>
-</html>
+	<br><br><br>
