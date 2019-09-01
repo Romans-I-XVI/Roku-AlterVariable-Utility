@@ -14,16 +14,7 @@
 function submit() {
     ip_address = document.getElementById("ipaddress").value;
     code = [
-	    document.getElementById("code_0").value,
-	    document.getElementById("code_1").value,
-	    document.getElementById("code_2").value,
-	    document.getElementById("code_3").value,
-	    document.getElementById("code_4").value,
-	    document.getElementById("code_5").value,
-	    document.getElementById("code_6").value,
-	    document.getElementById("code_7").value,
-	    document.getElementById("code_8").value,
-	    document.getElementById("code_9").value
+	    document.getElementById("code").value
     ];
 
     for(var i=0; i < code.length; i++) {
@@ -32,7 +23,7 @@ function submit() {
 
 
 	$.ajax({
-	    url: 'http://'+ip_address+':8060/input?code_0='+code[0]+"&code_1="+code[1]+"&code_2="+code[2]+"&code_3="+code[3]+"&code_4="+code[4]+"&code_5="+code[5]+"&code_6="+code[6]+"&code_7="+code[7]+"&code_8="+code[8]+"&code_9="+code[9]
+	    url: 'http://'+ip_address+':8060/input?type=debugger_code&code='+code[0]
 ,
 	    type: 'POST',
 	    data: ''
@@ -44,16 +35,7 @@ function submit() {
 	<div style="width:100%; margin-left:auto; margin-right:auto;">
 		<h3>Enter Roku IP Address</h3><input id="ipaddress" type="text" size="50" autocomplete="off"><br><br>
 		<h3>Enter Code To Execute</h3>
-		<input id="code_0" type="text" size="80" autocomplete="off"><br>
-		<input id="code_1" type="text" size="80" autocomplete="off"><br>
-		<input id="code_2" type="text" size="80" autocomplete="off"><br>
-		<input id="code_3" type="text" size="80" autocomplete="off"><br>
-		<input id="code_4" type="text" size="80" autocomplete="off"><br>
-		<input id="code_5" type="text" size="80" autocomplete="off"><br>
-		<input id="code_6" type="text" size="80" autocomplete="off"><br>
-		<input id="code_7" type="text" size="80" autocomplete="off"><br>
-		<input id="code_8" type="text" size="80" autocomplete="off"><br>
-		<input id="code_9" type="text" size="80" autocomplete="off"><br>
+		<input id="code" type="text" size="80" autocomplete="off"><br>
 		<button type="button" onclick="submit()"> Submit </button>
 	</div><br><br><br><br>
 	<div style="width:60%; margin: 0 auto">
